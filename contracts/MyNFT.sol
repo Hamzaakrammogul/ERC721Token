@@ -30,7 +30,7 @@ contract MyNFT is ERC721, ERC721Enumerable, Pausable, Ownable, ERC721Burnable {
     }
 
     function safeMint(address to) public payable {
-        require(totalSupply()< maxSupply, "The minting limit has reached to its max, Sorry!");
+        require(totalSupply()<= maxSupply, "The minting limit has reached to its max, Sorry!");
         require(msg.value>= mintRate,"Not enough ether");
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();

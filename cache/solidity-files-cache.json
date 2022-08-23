@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Users\\Ameer Hamza\\Documents\\GitHub\\ERC721Token\\contracts\\MyNFT.sol": {
-      "lastModificationDate": 1661172447260,
-      "contentHash": "a8645fb9536d93484a0053b54de8afff",
+      "lastModificationDate": 1661254671953,
+      "contentHash": "d0fdd3c1f9a559fb0499a40045fba966",
       "sourceName": "contracts/MyNFT.sol",
       "solcConfig": {
         "version": "0.8.9",
