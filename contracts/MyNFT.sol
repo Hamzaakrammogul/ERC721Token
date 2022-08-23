@@ -12,15 +12,15 @@ contract MyNFT is ERC721, ERC721Enumerable, Pausable, Ownable, ERC721Burnable {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
-    uint256 public mintRate=0.01 ether;
     uint256 public maxSupply=10;
 
-    constructor() ERC721("MyNFT", "MNFT") {}
+    constructor() ERC721("MyNFT", "MNFT") {
+     
+    }
 
     function _baseURI() internal pure override returns (string memory) {
         return "https://api.mynft.com/tokens/";
     }
-
     function pause() public onlyOwner {
         _pause();
     }
@@ -31,7 +31,6 @@ contract MyNFT is ERC721, ERC721Enumerable, Pausable, Ownable, ERC721Burnable {
 
     function safeMint(address to) public payable {
         require(totalSupply()<= maxSupply, "The minting limit has reached to its max, Sorry!");
-        require(msg.value>= mintRate,"Not enough ether");
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
