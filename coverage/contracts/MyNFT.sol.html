@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">45.45% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/12</span>
+        <span class='fraction'>5/11</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">25% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/6</span>
+        <span class='fraction'>1/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">12.5% </span>
+        <span class="strong">37.5% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/8</span>
+        <span class='fraction'>3/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">45.45% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/12</span>
+        <span class='fraction'>5/11</span>
       </div>
     </div>
   </div>
@@ -104,8 +104,7 @@
 59
 60
 61
-62
-63</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+62</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -123,6 +122,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -133,15 +136,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">19×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -149,7 +147,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">19×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -181,15 +179,15 @@ contract MyNFT is ERC721, ERC721Enumerable, Pausable, Ownable, ERC721Burnable {
     using Counters for Counters.Counter;
 &nbsp;
     Counters.Counter private _tokenIdCounter;
-    uint256 public mintRate=0.01 ether;
     uint256 public maxSupply=10;
 &nbsp;
-    constructor() ERC721("MyNFT", "MNFT") {}
+    constructor() ERC721("MyNFT", "MNFT") {
+     
+    }
 &nbsp;
 <span class="fstat-no" title="function not covered" >    function _baseURI() internal pure override returns (string memory) {</span>
 <span class="cstat-no" title="statement not covered" >        return "https://api.mynft.com/tokens/";</span>
     }
-&nbsp;
 <span class="fstat-no" title="function not covered" >    function pause() public onlyOwner {</span>
 <span class="cstat-no" title="statement not covered" >        _pause()</span>;
     }
@@ -198,20 +196,19 @@ contract MyNFT is ERC721, ERC721Enumerable, Pausable, Ownable, ERC721Burnable {
 <span class="cstat-no" title="statement not covered" >        _unpause()</span>;
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    function safeMint(address to) public payable {</span>
-<span class="cstat-no" title="statement not covered" >        require(totalSupply()&lt;= maxSupply, "The minting limit has reached to its max, Sorry!")</span>;
-<span class="cstat-no" title="statement not covered" >        require(msg.value&gt;= mintRate,"Not enough ether")</span>;
-<span class="cstat-no" title="statement not covered" >        uint256 tokenId = _tokenIdCounter.current();</span>
-<span class="cstat-no" title="statement not covered" >        _tokenIdCounter.increment()</span>;
-<span class="cstat-no" title="statement not covered" >        _safeMint(to, tokenId)</span>;
+    function safeMint(address to) public payable {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(totalSupply()&lt;= maxSupply, "The minting limit has reached to its max, Sorry!");
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
+        _safeMint(to, tokenId);
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    function _beforeTokenTransfer(address from, address to, uint256 tokenId)</span>
+    function _beforeTokenTransfer(address from, address to, uint256 tokenId)
         internal
         whenNotPaused
         override(ERC721, ERC721Enumerable)
     {
-<span class="cstat-no" title="statement not covered" >        super._beforeTokenTransfer(from, to, tokenId)</span>;
+        super._beforeTokenTransfer(from, to, tokenId);
     }
 &nbsp;
     // The following functions are overrides required by Solidity.
@@ -235,7 +232,7 @@ contract MyNFT is ERC721, ERC721Enumerable, Pausable, Ownable, ERC721Burnable {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 23 2022 19:04:37 GMT+0500 (Pakistan Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Aug 24 2022 17:44:04 GMT+0500 (Pakistan Standard Time)
 </div>
 </div>
 <script src="../prettify.js"></script>
