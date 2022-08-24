@@ -1,4 +1,5 @@
 const{expect}= require("chai");
+const BigNumber = require('bignumber.js');
 
 
 describe("Deployment", function(){
@@ -7,7 +8,7 @@ describe("Deployment", function(){
     let addr2;
     let myNFTToken;
     let operator;
-    const tokenId1="1021";
+    const firstTokenId = new BigNumber('5042');
     const zero_address = "0x0000000000000000000000000000000000000000";
     let name= "MyNFT";
     let symbol="MNFT";
@@ -82,15 +83,15 @@ describe("Deployment", function(){
   });
   describe("approve", function(){
     it("Change the apporoved address for NFT", async function(){
-      await myNFTToken.safeMint(owner.address);
-      const tokenId2=0;
-      const approvedEvent= await myNFTToken.approve(addr1.address, tokenId2);
-      expect(approvedEvent),'Approval', {_owner: owner, _approved: addr1, _tokenId: tokenId2};
+        await myNFTToken.safeMint(owner.address);
+        tokenId2=0;
+        const approvedEvent= await myNFTToken.approve(addr1.address, tokenId2);
+        expect(approvedEvent),'Approval', {_owner: owner, _approved: addr1, _tokenId: tokenId2};
     })
 
-    it.only('approves the operator', async function () {
-      const ApprovalForAllEvent= await myNFTToken.setApprovalForAll(operator.address, true);
-      expect(ApprovalForAllEvent), 'ApprovalForAll', {_owner: owner, _operator: operator, _approved: true};
+    it('approves the operator', async function () {
+        const ApprovalForAllEvent= await myNFTToken.setApprovalForAll(operator.address, true);
+        expect(ApprovalForAllEvent), 'ApprovalForAll', {_owner: owner, _operator: operator, _approved: true};
     });
   })
 });
