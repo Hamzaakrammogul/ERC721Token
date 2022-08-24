@@ -6,13 +6,15 @@ describe("Deployment", function(){
     let addr1;
     let addr2;
     let myNFTToken;
+    let operator;
+    const tokenId1="1021";
     const zero_address = "0x0000000000000000000000000000000000000000";
     let name= "MyNFT";
     let symbol="MNFT";
     const baseURI = "https://api.mynft.com/tokens/";
 
   beforeEach("Deploying contract", async function(){
-    [owner, addr1, addr2]= await ethers.getSigners();
+    [owner, addr1, addr2, operator]= await ethers.getSigners();
     MyNFT= await ethers.getContractFactory("MyNFT");
     myNFTToken= await MyNFT.deploy();
   });
@@ -52,7 +54,6 @@ describe("Deployment", function(){
         expect(await myNFTToken.ownerOf(0)).to.equal(owner.address);
         expect(await myNFTToken.ownerOf(1)).to.equal(addr1.address);
     });
-    
   });
   describe("transferFrom", function(){
     it("Transfer the ownership of token", async function(){
@@ -60,7 +61,7 @@ describe("Deployment", function(){
         await myNFTToken.connect(addr1).transferFrom(addr1.address, addr2.address, 0);
         expect(await myNFTToken.balanceOf(addr2.address)).to.equal(1);
         expect(await myNFTToken.balanceOf(addr1.address)).to.equal(0);
-    })
+    });
     it("Reverts if the caller is not msg.sender", async function(){
         await myNFTToken.safeMint(owner.address);
         const attacker= await myNFTToken.connect(addr1);
@@ -71,6 +72,25 @@ describe("Deployment", function(){
         await myNFTToken.safeMint(owner.address);
         await expect(myNFTToken.transferFrom(owner.address, zero_address, 0))
         .to.be.revertedWith("ERC721: transfer to the zero address");
+    });
+  });
+  describe("Transfer Event", function(){
+    it("it emits the event", async function(){
+        const transferEvent= await myNFTToken.safeMint(owner.address);
+        expect(transferEvent), 'Transfer', {_from: zero_address, _to: owner, _tokenId: 0 };
+    });
+  });
+  describe("approve", function(){
+    it("Change the apporoved address for NFT", async function(){
+      await myNFTToken.safeMint(owner.address);
+      const tokenId2=0;
+      const approvedEvent= await myNFTToken.approve(addr1.address, tokenId2);
+      expect(approvedEvent),'Approval', {_owner: owner, _approved: addr1, _tokenId: tokenId2};
+    })
+
+    it.only('approves the operator', async function () {
+      const ApprovalForAllEvent= await myNFTToken.setApprovalForAll(operator.address, true);
+      expect(ApprovalForAllEvent), 'ApprovalForAll', {_owner: owner, _operator: operator, _approved: true};
     });
   })
 });
